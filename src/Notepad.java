@@ -14,14 +14,32 @@ public class Notepad {
         int i = indexOf(record);
         if (i == -1) {
             System.err.println("Record not found");
-        };
+        }
         for (int j = i + 1; j < recordsCount; j++) {
             records[j - 1] = records[j];
         }
+        records[recordsCount-1] = null;
         recordsCount--;
-        if (recordsCount == records.length - 1000) {
+        if (recordsCount > 0 && recordsCount == records.length - 1000) {
             shrinkRecords();
         }
+    }
+
+    public Record findByTitle (String title) {
+        for (int i = 0; i < recordsCount; i++) {
+            if (records[i].getTitle().equals(title)) {
+                return records[i];
+            }
+        }
+        return null;
+    }
+
+    public Record[] getAllRecords () {
+        Record[] result = new Record[recordsCount];
+        for (int i = 0; i < recordsCount; i++) {
+            result[i] = records[i];
+        }
+        return result;
     }
 
     private int indexOf(Record record) {
