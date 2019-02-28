@@ -19,6 +19,7 @@ public class Main {
         }
 
         // find record
+
         Record coolRecord = notepad.findByTitle("Blah blah");
 
         System.out.println("Found record:" + "\n" + coolRecord);
@@ -30,17 +31,20 @@ public class Main {
         System.out.println(coolRecord.getContent());
 
         // print record
-        System.out.println(coolRecord.toString());
+        System.out.println(coolRecord);
 
         // edit record
         Thread.sleep(4000);
         coolRecord.updateContent("The weather is awful");
 
         // print edited record
-        System.out.println(coolRecord.toString());
+        System.out.println(coolRecord);
 
         // remove record
         notepad.removeRecord(coolRecord);
+
+        // remove not included record
+        notepad.removeRecord(new Record("jjj"));
 
         // print all records
         for (Record r : notepad.getAllRecords()) {

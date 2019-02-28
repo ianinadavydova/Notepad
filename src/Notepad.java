@@ -1,6 +1,7 @@
 public class Notepad {
-    private Record[] records = new Record[1000];
-    private int recordsCount = 0;
+    private static final int INITIAL_SIZE = 1000;
+    private Record[] records;
+    private int recordsCount;
 
 
     public void addRecord(Record newRecord) {
@@ -11,16 +12,17 @@ public class Notepad {
     }
 
     public void removeRecord(Record record) {
-        int i = indexOf(record);
-        if (i == -1) {
+        int index = indexOf(record);
+        if (index == -1) {
             System.err.println("Record not found");
+            return;
         }
-        for (int j = i + 1; j < recordsCount; j++) {
+        for (int j = index + 1; j < recordsCount; j++) {
             records[j - 1] = records[j];
         }
-        records[recordsCount-1] = null;
         recordsCount--;
-        if (recordsCount > 0 && recordsCount == records.length - 1000) {
+        records[recordsCount] = null;
+        if (recordsCount > 0 && recordsCount == records.length - INITIAL_SIZE) {
             shrinkRecords();
         }
     }
@@ -35,11 +37,7 @@ public class Notepad {
     }
 
     public Record[] getAllRecords () {
-        Record[] result = new Record[recordsCount];
-        for (int i = 0; i < recordsCount; i++) {
-            result[i] = records[i];
-        }
-        return result;
+        return copyRecordsToArray(recordsCount);
     }
 
     private int indexOf(Record record) {
@@ -51,19 +49,22 @@ public class Notepad {
         return -1;
     }
 
+    private Record[] copyRecordsToArray(int arrayLength) {
+        Record[] result = new Record[arrayLength];
+        System.arraycopy(records, 0, result, 0, recordsCount);
+        return result;
+    }
+
     private void extendRecors() {
-        Record[] extendedRecords = new Record[records.length + 1000];
-        for (int i = 0; i < recordsCount; i++) {
-            extendedRecords[i] = records[i];
-        }
-        records = extendedRecords;
+        records = copyRecordsToArray(records.length + INITIAL_SIZE);
     }
 
     private void shrinkRecords() {
-        Record[] shrinkedRecords = new Record[records.length - 1000];
-        for (int j = 0; j < recordsCount; j++) {
-            shrinkedRecords[j] = records[j];
-        }
-        records = shrinkedRecords;
+        records = copyRecordsToArray(records.length - INITIAL_SIZE);
+    }
+
+    public Notepad() {
+        records = new Record[INITIAL_SIZE];
+        recordsCount = 0;
     }
 }
