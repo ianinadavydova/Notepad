@@ -6,6 +6,17 @@ public class Record {
     private String title;
     private String content;
 
+    public Record(String title, String content) {
+        this.title = title;
+        this.content = content;
+        creationDate = new Date();
+        modificationDate = creationDate;
+    }
+
+    public Record(String title) {
+        this(title, "");
+    }
+
     public String getTitle() {
         return title;
     }
@@ -27,16 +38,5 @@ public class Record {
                 "Created: %s\n" +
                 "Edited: %s",
                 title.toUpperCase(), content, creationDate, modificationDate);
-    }
-
-    public Record(String title, String content) {
-        this.title = title;
-        this.content = content;
-        creationDate = new Date();
-        modificationDate = creationDate;
-    }
-
-    public Record(String title) {
-        this(title, "");
     }
 }

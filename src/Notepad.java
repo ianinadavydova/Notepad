@@ -3,6 +3,10 @@ public class Notepad {
     private Record[] records;
     private int recordsCount;
 
+    public Notepad() {
+        records = new Record[INITIAL_SIZE];
+        recordsCount = 0;
+    }
 
     public void addRecord(Record newRecord) {
         if (recordsCount == records.length) {
@@ -61,10 +65,5 @@ public class Notepad {
 
     private void shrinkRecords() {
         records = copyRecordsToArray(records.length - INITIAL_SIZE);
-    }
-
-    public Notepad() {
-        records = new Record[INITIAL_SIZE];
-        recordsCount = 0;
     }
 }
