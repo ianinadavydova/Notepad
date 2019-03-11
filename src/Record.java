@@ -1,19 +1,20 @@
 import java.util.Date;
 
 public class Record {
-    private Date creationDate = new Date();
-    private Date modificationDate = new Date();
+    private Date creationDate;
+    private Date modificationDate;
     private String title;
     private String content;
 
     public Record(String title, String content) {
         this.title = title;
         this.content = content;
+        creationDate = new Date();
+        modificationDate = creationDate;
     }
 
     public Record(String title) {
-        this.title = title;
-        this.content = "";
+        this(title, "");
     }
 
     public String getTitle() {
@@ -31,6 +32,11 @@ public class Record {
 
     @Override
     public String toString() {
-        return title.toUpperCase() + "\n" + content + "\n" + "Created: " + creationDate.toString() + "\n" + "Edited: " + modificationDate.toString();
+        return String.format(
+                "%s\n" +
+                "%s\n" +
+                "Created: %s\n" +
+                "Edited: %s",
+                title.toUpperCase(), content, creationDate, modificationDate);
     }
 }
